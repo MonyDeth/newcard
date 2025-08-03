@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center text-center bg-gray-50 px-4">
-    <img src="@/assets/logo_long_black.png" alt="Logo" class="h-20 mb-6" />
     <h1 class="text-4xl font-bold text-gray-800 mb-2">Welcome to MMS Registration</h1>
     <p class="text-lg text-gray-600 mb-6">Effortlessly manage your registration workflow</p>
     <button
