@@ -60,27 +60,33 @@
 
 
     <button
-      type="submit"
-      class="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition"
-    >
-      រក្សាទុកកាត
-    </button>
+  type="submit"
+  class="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition flex items-center justify-center gap-2"
+  :disabled="loading"
+>
+  <svg v-if="loading" class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z" />
+  </svg>
+  <span>{{ loading ? 'កំពុងរក្សាទុក...' : 'រក្សាទុកកាត' }}</span>
+</button>
   </form>
 </div>
 
 
-    <div class="order-2 md:order-none w-full md:w-1/2 flex justify-center items-center">
-      <div
-        class="relative aspect-[2/3] w-128 bg-white rounded-lg shadow-lg flex flex-col overflow-hidden bg-cover"
-        style="background-image: url('/images/watermark.png')"
-      >
+<div class="order-2 md:order-none w-full md:w-1/2 flex justify-center items-center">
+            <div
+            id="card-to-download"
+            class="relative aspect-[2/3] w-full max-w-sm md:w-128 bg-white rounded-lg shadow-lg flex flex-col overflow-hidden bg-cover"
+            style="background-image: url('/images/watermark.png')"
+            >
         <!-- Top logo bar -->
-        <div class="bg-[#083f65] h-28 flex items-center justify-center">
-            <img src="/images/logo_long_white.png" alt="Logo" class="h-24 object-contain" />
+        <div class="bg-[#083f65] h-18 flex items-center justify-center">
+            <img src="/images/logo_long_white.png" alt="Logo" class="h-16 object-contain" />
         </div>
 
         <!-- Uploaded Image -->
-        <div class="flex justify-center mt-12">
+        <div class="flex justify-center mt-8">
             <img
                 v-if="imageUrl"
                 :src="imageUrl"
@@ -97,7 +103,7 @@
 
 
         <!-- Name -->
-       <div class="px-4 mt-12 text-center">
+       <div class=" mt-8 text-center">
             <template v-if="hasKhmer(name) && hasLatin(name)">
                 <div class="font-moul text-xl">{{ extractKhmer(name) }}</div>
                 <div class="font-dm-serif text-lg mt-1">{{ extractLatin(name) }}</div>
@@ -111,7 +117,7 @@
             </div>
 
         <!-- Position -->
-        <div class="text-center flex mt-4 justify-center text-gray-700 mt-1 px-4 font-bold">
+        <div class="text-center flex mt-2 justify-center text-gray-700 mt-1 px-4 font-bold">
             <p class="me-1 font-siemreap text-base leading-snug">មុខដំណែង </p>
             <p class="ms-1 text-sm text-gray-500 font-dm-serif"> Position</p>
         </div>
@@ -120,7 +126,7 @@
           {{ position || 'មុខដំណែង' }}
         </p>
           <!-- Department -->
-        <div class="text-center flex mt-4 justify-center text-gray-700 mt-1 px-4 font-bold">
+        <div class="text-center flex mt-2 justify-center text-gray-700 mt-1 px-4 font-bold">
             <p class="me-1 font-siemreap text-base leading-snug">នាយកដ្ឋាន </p>
             <p class="ms-1 text-sm text-gray-500 font-dm-serif"> Department</p>
         </div>
@@ -142,7 +148,7 @@
         <!-- Department bar -->
         <div
           :class="departmentBgColor(department)"
-          class="mt-auto py-4 text-center text-white font-moul text-xl"
+          class="mt-auto py-4 text-center text-white font-moul text-l"
         >
           {{ department || 'អគ្គនាយគដ្ឋាន នាយគដ្ឋាន ' }}
         </div>
@@ -153,17 +159,50 @@
 
 <script setup>
 import { ref } from 'vue'
+import html2canvas from 'html2canvas'
 
 const name = ref('')
 const position = ref('')
 const department = ref('')
 const workingDate = ref('')
+
 const imageUrl = ref(null)
 const today = new Date().toLocaleDateString('en-GB', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
 })
+
+const loading = ref(false)
+const imagePreview = ref(null)
+
+async function submitForm() {
+  loading.value = true
+
+  try {
+    const cardElement = document.querySelector('#card-to-download')
+    const canvas = await html2canvas(cardElement, {
+      scale: 2,
+      useCORS: true,
+    })
+
+    const image = canvas.toDataURL('image/png')
+    imagePreview.value = image
+
+    // Optional: auto-download
+    const link = document.createElement('a')
+    link.download = `${name.value || 'card'}.png`
+    link.href = image
+    link.click()
+
+  } catch (error) {
+    alert('Something went wrong while generating the image.')
+    console.error(error)
+  }
+
+  loading.value = false
+}
+
 function onImageChange(event) {
   const file = event.target.files[0]
   if (!file) {
@@ -173,10 +212,6 @@ function onImageChange(event) {
   imageUrl.value = URL.createObjectURL(file)
 }
 
-function submitForm() {
-  alert(`Card saved for ${name.value}!`)
-  // Add your save/upload logic here
-}
 
 // Detect Khmer characters (Unicode range U+1780–U+17FF)
 function isKhmer(text) {
@@ -184,13 +219,10 @@ function isKhmer(text) {
   return /[\u1780-\u17FF]/.test(text)
 }
 
-
-
 function formatDate(dateStr, locale = 'km-KH') {
   const options = { year: 'numeric', month: 'short', day: 'numeric' }
   return new Date(dateStr).toLocaleDateString(locale, options)
 }
-
 
 // Department background colors
 function departmentBgColor(dep) {
