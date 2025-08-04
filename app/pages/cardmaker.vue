@@ -1,26 +1,43 @@
 <template>
-  <div class="min-h-screen flex flex-col md:flex-row p-4 md:p-6 gap-6 bg-gray-50">
+<div class="min-h-screen flex flex-col md:flex-row p-4 md:p-6 gap-6 bg-gray-50 overflow-x-hidden">
     <!-- Preview -->
   
 
     <!-- Edit Form (same as before) -->
     <div class="order-1 md:order-none w-full md:w-1/2 bg-white rounded-lg shadow p-6">
-  <h2 class="text-2xl font-bold mb-6">កែប្រែព័ត៌មានកាត</h2>
-  <form @submit.prevent="submitForm" class="space-y-6">
+<div class="flex items-center gap-4 mb-6">
+  <img
+    src="/images/logo.png"
+    alt="Logo"
+    class="w-16 sm:w-20 rounded-full object-cover"
+  />
+  <div>
+    <h2 class="text-xl sm:text-2xl">ព័ត៌មានកាតមន្ត្រី</h2>
+    <h2 class="text-xl sm:text-2xl font-dm-serif">Officer Card Information</h2>
+  </div>
+</div>
+  
+  <form @submit.prevent="submitForm" class="space-y-6 p-4 border border-gray-200 rounded-2xl">
     <div>
-      <label for="name" class="block font-medium mb-1">ឈ្មោះ</label>
-      <input
-        id="name"
-        v-model="name"
-        type="text"
-        class="w-full border border-[#083f65] rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
-        placeholder="បញ្ចូលឈ្មោះពេញ"
-        required
-      />
-    </div>
+  <label for="name" class="block font-medium mb-1">ឈ្មោះ</label>
+  <input
+    id="name"
+    v-model="name"
+    type="text"
+    class="w-full border border-[#083f65] rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
+    placeholder="បញ្ចូលឈ្មោះពេញ"
+    required
+  />
+  <p class="text-sm text-gray-500 mt-1">
+    ដាក់បានភាសាតែមួយប៉ុណ្ណោះ (ខ្មែរ ឬ អង់គ្លេស) 
+  </p>
+   <p class="text-sm text-gray-500 mt-1">
+    Support only one language at a time (Khmer or English)
+  </p>
+</div>
 
     <div>
-      <label for="position" class="block font-medium mb-1">មុខដំណែង</label>
+      <label for="position" class="block font-medium mb-1">មុខតំណែង</label>
       <input
         id="position"
         v-model="position"
@@ -48,40 +65,38 @@
     </div>
 
     <div>
-      <label for="image" class="block font-medium mb-1">បញ្ចូលរូបភាព</label>
+      <label for="image" class="block font-medium mb-1">បង្ហោះររូបភាព</label>
       <input
         id="image"
         type="file"
         @change="onImageChange"
         accept="image/*"
-        class="w-full file:border-0 file:bg-blue-600 file:text-white file:px-4 file:py-2 file:rounded-md file:cursor-pointer hover:file:bg-blue-700 transition"
+        class="w-full file:border-0 file:bg-[#093E65] file:text-white file:px-4 file:py-2 file:rounded-md file:cursor-pointer hover:file:bg-blue-700 transition"
       />
     </div>
 
-
-    <button
-  type="submit"
-  class="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition flex items-center justify-center gap-2"
-  :disabled="loading"
+    <p class="text-sm text-gray-500 mt-1">
+    ទិន្នន័យរបស់អ្នកមិនត្រូវបានរក្សាទុកទេ។ Your data is not stored anywhere.
+  </p>
+<button
+  type="button"
+  class="w-full bg-[#093E65] text-white font-semibold py-3 rounded-md hover:bg-[#0063AC] transition flex items-center justify-center gap-2"
+  onclick="document.getElementById('card-to-download').scrollIntoView({ behavior: 'smooth' });"
 >
-  <svg v-if="loading" class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z" />
-  </svg>
-  <span>{{ loading ? 'កំពុងរក្សាទុក...' : 'រក្សាទុកកាត' }}</span>
+  រួចរាល់
 </button>
   </form>
 </div>
 
 
-<div class="order-2 md:order-none w-full md:w-1/2 flex justify-center items-center">
+<div class="order-2 md:order-none w-full md:w-1/2 flex justify-center items-center mb-20">
             <div
             id="card-to-download"
             class="relative aspect-[2/3] w-full max-w-sm md:w-128 bg-white rounded-lg shadow-lg flex flex-col overflow-hidden bg-cover"
-            style="background-image: url('/images/watermark.png')"
+            style="background-image: url('/images/watermark2.png')"
             >
         <!-- Top logo bar -->
-        <div class="bg-[#083f65] h-18 flex items-center justify-center">
+        <div class="bg-[#083f65] h-20 flex items-center justify-center border-b border-[#2B71A4]">
             <img src="/images/logo_long_white.png" alt="Logo" class="h-16 object-contain" />
         </div>
 
@@ -103,7 +118,7 @@
 
 
         <!-- Name -->
-       <div class=" mt-8 text-center">
+       <div class=" mt-8 text-center text-white">
             <template v-if="hasKhmer(name) && hasLatin(name)">
                 <div class="font-moul text-xl">{{ extractKhmer(name) }}</div>
                 <div class="font-dm-serif text-lg mt-1">{{ extractLatin(name) }}</div>
@@ -117,31 +132,31 @@
             </div>
 
         <!-- Position -->
-        <div class="text-center flex mt-2 justify-center text-gray-700 mt-1 px-4 font-bold">
-            <p class="me-1 font-siemreap text-base leading-snug">មុខដំណែង </p>
-            <p class="ms-1 text-sm text-gray-500 font-dm-serif"> Position</p>
+        <div class="text-center flex mt-2 justify-center text-gray-400 mt-1 px-4 font-bold">
+            <p class="me-1 font-siemreap text-base leading-snug">មុខតំណែង </p>
+            <p class="ms-1 text-sm font-dm-serif"> Position</p>
         </div>
 
-        <p class="text-center text-2xl​ font-bold font-siemreap text-gray-700 mt-1 px-4">
-          {{ position || 'មុខដំណែង' }}
+        <p class="text-center text-2xl​ font-bold font-siemreap text-white mt-1 px-4">
+          {{ position || 'មុខតំណែង' }}
         </p>
           <!-- Department -->
-        <div class="text-center flex mt-2 justify-center text-gray-700 mt-1 px-4 font-bold">
+        <div class="text-center flex mt-2 justify-center text-gray-400  mt-1 px-4 font-bold">
             <p class="me-1 font-siemreap text-base leading-snug">នាយកដ្ឋាន </p>
-            <p class="ms-1 text-sm text-gray-500 font-dm-serif"> Department</p>
+            <p class="ms-1 text-sm font-dm-serif"> Department</p>
         </div>
 
-        <p class="text-center text-2xl​ font-bold font-siemreap text-gray-700 mt-1 px-4">
+        <p class="text-center text-2xl​ font-bold font-siemreap text-white  mt-1 px-4">
           {{ department || 'នាយកដ្ឋាន' }}
         </p>
 
 
         <!-- Effective Date -->
-        <div class="text-center flex mt-auto justify-center text-gray-700 px-4 font-bold">
+        <div class="text-center flex mt-auto justify-center text-gray-400 px-4 font-bold">
             <p class="me-1 font-siemreap text-base leading-snug">កាតធ្វើថ្ងៃទី</p>
             <p class="me-1 font-siemreap text-base leading-snug">Card Issue Date </p>
         </div>
-        <p class="text-center text-xl font-dm-serif text-black">{{ today }}</p>
+        <p class="text-center text-xl font-dm-serif text-white">{{ today }}</p>
 
 
 
@@ -150,7 +165,7 @@
           :class="departmentBgColor(department)"
           class="mt-auto py-4 text-center text-white font-moul text-l"
         >
-          {{ department || 'អគ្គនាយគដ្ឋាន នាយគដ្ឋាន ' }}
+          {{ department || '---' }}
         </div>
       </div>
     </div>
@@ -159,7 +174,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import html2canvas from 'html2canvas'
+// import html2canvas from 'html2canvas'
 
 const name = ref('')
 const position = ref('')
@@ -173,35 +188,35 @@ const today = new Date().toLocaleDateString('en-GB', {
   day: 'numeric',
 })
 
-const loading = ref(false)
-const imagePreview = ref(null)
+// const loading = ref(false)
+// const imagePreview = ref(null)
 
-async function submitForm() {
-  loading.value = true
+// async function submitForm() {
+//   loading.value = true
 
-  try {
-    const cardElement = document.querySelector('#card-to-download')
-    const canvas = await html2canvas(cardElement, {
-      scale: 2,
-      useCORS: true,
-    })
+//   try {
+//     const cardElement = document.querySelector('#card-to-download')
+//     const canvas = await html2canvas(cardElement, {
+//       scale: 2,
+//       useCORS: true,
+//     })
 
-    const image = canvas.toDataURL('image/png')
-    imagePreview.value = image
+//     const image = canvas.toDataURL('image/png')
+//     imagePreview.value = image
 
-    // Optional: auto-download
-    const link = document.createElement('a')
-    link.download = `${name.value || 'card'}.png`
-    link.href = image
-    link.click()
+//     // Optional: auto-download
+//     const link = document.createElement('a')
+//     link.download = `${name.value || 'card'}.png`
+//     link.href = image
+//     link.click()
 
-  } catch (error) {
-    alert('Something went wrong while generating the image.')
-    console.error(error)
-  }
+//   } catch (error) {
+//     alert('Something went wrong while generating the image.')
+//     console.error(error)
+//   }
 
-  loading.value = false
-}
+//   loading.value = false
+// }
 
 function onImageChange(event) {
   const file = event.target.files[0]

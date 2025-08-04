@@ -1,47 +1,282 @@
 <template>
-  <div
-    class="min-h-screen flex flex-col items-center justify-center text-center px-4 relative overflow-hidden"
-  >
-    <!-- Background placeholder image with dark overlay -->
-    <div
-      class="absolute inset-0 bg-cover bg-center opacity-70"
-      style="background-image: url('https://via.placeholder.com/1920x1080');"
-      aria-hidden="true"
-    ></div>
-    <div class="absolute inset-0 bg-[#083f65] bg-opacity-60"></div>
+<div class="min-h-screen flex flex-col md:flex-row p-4 md:p-6 gap-6 bg-gray-50 overflow-x-hidden">
+    <!-- Preview -->
+  
 
-    <!-- Content -->
-    <div class="relative z-10 flex bg-white flex-col items-center border-2 shadow-xl border-gray-200 p-4 rounded-4xl text-black max-w-lg">
-      <img
-        src="/images/logo.png"
-        alt="Logo"
-        class="h-20 mb-6"
+    <!-- Edit Form (same as before) -->
+    <div class="order-1 md:order-none w-full md:w-1/2 bg-white rounded-lg shadow p-6">
+<div class="flex items-center gap-4 mb-6">
+  <img
+    src="/images/logo.png"
+    alt="Logo"
+    class="w-16 sm:w-20 rounded-full object-cover"
+  />
+  <div>
+    <h2 class="text-xl sm:text-2xl">ព័ត៌មានកាតមន្ត្រី</h2>
+    <h2 class="text-xl sm:text-2xl font-dm-serif">Officer Card Information</h2>
+  </div>
+</div>
+  
+  <form @submit.prevent="submitForm" class="space-y-6 p-4 border border-gray-200 rounded-2xl">
+    <div>
+  <label for="name" class="block font-medium mb-1">ឈ្មោះ</label>
+  <input
+    id="name"
+    v-model="name"
+    type="text"
+    class="w-full border border-[#083f65] rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
+    placeholder="បញ្ចូលឈ្មោះពេញ"
+    required
+  />
+  <p class="text-sm text-gray-500 mt-1">
+    ដាក់បានភាសាតែមួយប៉ុណ្ណោះ (ខ្មែរ ឬ អង់គ្លេស) 
+  </p>
+   <p class="text-sm text-gray-500 mt-1">
+    Support only one language at a time (Khmer or English)
+  </p>
+</div>
+
+    <div>
+      <label for="position" class="block font-medium mb-1">មុខតំណែង</label>
+      <input
+        id="position"
+        v-model="position"
+        type="text"
+        class="w-full border border-[#083f65] rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
+        placeholder="បញ្ចូលមុខដំណែង"
+        required
       />
-      <h1 class="text-xl font-bold mb-2">
-        ស្វាគតមកកាន់ការចុះឈ្មោះជាមន្ត្រី
-      </h1>
-        <h1 class="text-xl font-bold mb-2">
-        ក្រសួងវេទមន្ត និងមន្តអាគម
-      </h1>
-      <p class="text-lg mb-6 font-bold">
-            ចុះឈ្មោះដើម្បីបានកាតសំគាល់ខ្លួន      </p>
-      <button
-        @click="goToCardMaker"
-        class="bg-[#083f65] text-white font-bold hover:bg-blue-900 px-6 py-2 rounded-lg transition"
+    </div>
+
+    <div>
+      <label for="department" class="block font-medium mb-1">នាយកដ្ឋាន</label>
+      <select
+        id="department"
+        v-model="department"
+        class="w-full border border-[#083f65] rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
+        required
       >
-        ចាប់ផ្តើម
-      </button>
-    
+        <option disabled value="">ជ្រើសរើសអគ្គនាយកដ្ឋាន នាយកដ្ឋាន</option>
+        <option>អគ្គនាយកដ្ឋាន ទស្សន៍ទាយ និងបង្ការគ្រោះ</option>
+        <option>អគ្គនាយកដ្ឋាន វត្ថុទិព</option>
+        <option>នាយកដ្ឋាន ទំនាក់ទំនង</option>
+        <option>នាយកដ្ឋាន ប្រហាវេទមន្ត</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="image" class="block font-medium mb-1">បង្ហោះររូបភាព</label>
+      <input
+        id="image"
+        type="file"
+        @change="onImageChange"
+        accept="image/*"
+        class="w-full file:border-0 file:bg-[#093E65] file:text-white file:px-4 file:py-2 file:rounded-md file:cursor-pointer hover:file:bg-blue-700 transition"
+      />
+    </div>
+
+    <p class="text-sm text-gray-500 mt-1">
+    ទិន្នន័យរបស់អ្នកមិនត្រូវបានរក្សាទុកទេ។ Your data is not stored anywhere.
+  </p>
+<button
+  type="button"
+  class="w-full bg-[#093E65] text-white font-semibold py-3 rounded-md hover:bg-[#0063AC] transition flex items-center justify-center gap-2"
+  onclick="document.getElementById('card-to-download').scrollIntoView({ behavior: 'smooth' });"
+>
+  រួចរាល់
+</button>
+  </form>
+</div>
+
+
+<div class="order-2 md:order-none w-full md:w-1/2 flex justify-center items-center mb-20">
+            <div
+            id="card-to-download"
+            class="relative aspect-[2/3] w-full max-w-sm md:w-128 bg-white rounded-lg shadow-lg flex flex-col overflow-hidden bg-cover"
+            style="background-image: url('/images/watermark2.png')"
+            >
+        <!-- Top logo bar -->
+        <div class="bg-[#083f65] h-20 flex items-center justify-center border-b border-[#2B71A4]">
+            <img src="/images/logo_long_white.png" alt="Logo" class="h-16 object-contain" />
+        </div>
+
+        <!-- Uploaded Image -->
+        <div class="flex justify-center mt-8">
+            <img
+                v-if="imageUrl"
+                :src="imageUrl"
+                alt="Uploaded Image"
+                class="w-24 h-32 scale-125 object-cover border-2 border-white shadow rounded"
+            />
+            <div
+                v-else
+                class="w-24 h-32 scale-125 bg-gray-300 border-2 border-white flex items-center justify-center text-gray-500 shadow rounded"
+            >
+                No Image
+            </div>
+            </div>
+
+
+        <!-- Name -->
+       <div class=" mt-8 text-center text-white">
+            <template v-if="hasKhmer(name) && hasLatin(name)">
+                <div class="font-moul text-xl">{{ extractKhmer(name) }}</div>
+                <div class="font-dm-serif text-lg mt-1">{{ extractLatin(name) }}</div>
+            </template>
+            <template v-else-if="hasKhmer(name)">
+                <div class="font-moul text-xl">{{ name }}</div>
+            </template>
+            <template v-else>
+                <div class="font-dm-serif text-xl font-semibold">{{ name || 'Full Name' }}</div>
+            </template>
+            </div>
+
+        <!-- Position -->
+        <div class="text-center flex mt-2 justify-center text-gray-400 mt-1 px-4 font-bold">
+            <p class="me-1 font-siemreap text-base leading-snug">មុខតំណែង </p>
+            <p class="ms-1 text-sm font-dm-serif"> Position</p>
+        </div>
+
+        <p class="text-center text-2xl​ font-bold font-siemreap text-white mt-1 px-4">
+          {{ position || 'មុខតំណែង' }}
+        </p>
+          <!-- Department -->
+        <div class="text-center flex mt-2 justify-center text-gray-400  mt-1 px-4 font-bold">
+            <p class="me-1 font-siemreap text-base leading-snug">នាយកដ្ឋាន </p>
+            <p class="ms-1 text-sm font-dm-serif"> Department</p>
+        </div>
+
+        <p class="text-center text-2xl​ font-bold font-siemreap text-white  mt-1 px-4">
+          {{ department || 'នាយកដ្ឋាន' }}
+        </p>
+
+
+        <!-- Effective Date -->
+        <div class="text-center flex mt-auto justify-center text-gray-400 px-4 font-bold">
+            <p class="me-1 font-siemreap text-base leading-snug">កាតធ្វើថ្ងៃទី</p>
+            <p class="me-1 font-siemreap text-base leading-snug">Card Issue Date </p>
+        </div>
+        <p class="text-center text-xl font-dm-serif text-white">{{ today }}</p>
+
+
+
+        <!-- Department bar -->
+        <div
+          :class="departmentBgColor(department)"
+          class="mt-auto py-4 text-center text-white font-moul text-l"
+        >
+          {{ department || '---' }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { ref } from 'vue'
+// import html2canvas from 'html2canvas'
 
-function goToCardMaker() {
-  router.push('/cardmaker')
+const name = ref('')
+const position = ref('')
+const department = ref('')
+const workingDate = ref('')
+
+const imageUrl = ref(null)
+const today = new Date().toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
+
+// const loading = ref(false)
+// const imagePreview = ref(null)
+
+// async function submitForm() {
+//   loading.value = true
+
+//   try {
+//     const cardElement = document.querySelector('#card-to-download')
+//     const canvas = await html2canvas(cardElement, {
+//       scale: 2,
+//       useCORS: true,
+//     })
+
+//     const image = canvas.toDataURL('image/png')
+//     imagePreview.value = image
+
+//     // Optional: auto-download
+//     const link = document.createElement('a')
+//     link.download = `${name.value || 'card'}.png`
+//     link.href = image
+//     link.click()
+
+//   } catch (error) {
+//     alert('Something went wrong while generating the image.')
+//     console.error(error)
+//   }
+
+//   loading.value = false
+// }
+
+function onImageChange(event) {
+  const file = event.target.files[0]
+  if (!file) {
+    imageUrl.value = null
+    return
+  }
+  imageUrl.value = URL.createObjectURL(file)
+}
+
+
+// Detect Khmer characters (Unicode range U+1780–U+17FF)
+function isKhmer(text) {
+  if (!text) return false
+  return /[\u1780-\u17FF]/.test(text)
+}
+
+function formatDate(dateStr, locale = 'km-KH') {
+  const options = { year: 'numeric', month: 'short', day: 'numeric' }
+  return new Date(dateStr).toLocaleDateString(locale, options)
+}
+
+// Department background colors
+function departmentBgColor(dep) {
+  switch (dep) {
+    case 'អគ្គនាយកដ្ឋាន ទស្សន៍ទាយ និងបង្ការគ្រោះ':
+      return 'bg-red-600'
+    case 'អគ្គនាយកដ្ឋាន វត្ថុទិព':
+      return 'bg-green-600'
+    case 'នាយកដ្ឋាន ទំនាក់ទំនង':
+      return 'bg-blue-700'
+    case 'នាយកដ្ឋាន ប្រហាវេទមន្ត':
+      return 'bg-teal-700 text-gray-900'
+    default:
+      return 'bg-gray-700'
+  }
+
+}
+
+function hasKhmer(text) {
+  return /[\u1780-\u17FF]/.test(text);
+}
+
+function hasLatin(text) {
+  return /[a-zA-Z]/.test(text);
 }
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Moul&family=Siemreap&family=DM+Serif+Text&display=swap');
+
+.font-moul {
+  font-family: 'Moul', serif;
+}
+
+.font-siemreap {
+  font-family: 'Siemreap', sans-serif;
+}
+.font-dm-serif {
+  font-family: 'DM Serif Text', serif;
+}
+</style>
 
