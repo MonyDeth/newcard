@@ -12,8 +12,8 @@
     class="w-16 sm:w-20 rounded-full object-cover"
   />
   <div>
-    <h2 class="text-xl sm:text-2xl">ព័ត៌មានកាតមន្ត្រី</h2>
-    <h2 class="text-xl sm:text-2xl font-dm-serif">Officer Card Information</h2>
+    <h2 class="text-base sm:text-2xl">ព័ត៌មានកាតមន្ត្រី</h2>
+    <h2 class="text-base sm:text-2xl font-dm-serif">Officer Card Information</h2>
   </div>
 </div>
   
@@ -65,15 +65,30 @@
     </div>
 
     <div>
-      <label for="image" class="block font-medium mb-1">បង្ហោះររូបភាព</label>
-      <input
-        id="image"
-        type="file"
-        @change="onImageChange"
-        accept="image/*"
-        class="w-full file:border-0 file:bg-[#093E65] file:text-white file:px-4 file:py-2 file:rounded-md file:cursor-pointer hover:file:bg-blue-700 transition"
-      />
-    </div>
+  <label for="image" class="block font-medium mb-1">បង្ហោះរូបភាព</label>
+
+  <!-- Hidden native file input -->
+  <input
+    id="image"
+    type="file"
+    @change="onImageChange"
+    accept="image/*"
+    class="hidden"
+  />
+
+  <!-- Custom upload button with your SVG icon -->
+  <label
+    for="image"
+    class="inline-flex items-center gap-2 cursor-pointer
+           bg-white border border-gray-300 shadow-sm
+           text-gray-700 px-4 py-1 rounded-md
+           hover:bg-gray-200 transition"
+  >
+    <img src="/images/image-add-line.svg" alt="Upload Icon" class="w-5 h-5" />
+    Upload Image
+  </label>
+</div>
+
 
     <p class="text-sm text-gray-500 mt-1">
     ទិន្នន័យរបស់អ្នកមិនត្រូវបានរក្សាទុកទេ។ Your data is not stored anywhere.
@@ -96,7 +111,7 @@
             style="background-image: url('/images/watermark2.png')"
             >
         <!-- Top logo bar -->
-        <div class="bg-[#083f65] h-20 flex items-center justify-center border-b border-[#2B71A4]">
+        <div class="bg-gradient-to-t from-[#1970B1] to-[#093E65] text-gray-900 h-20 flex items-center justify-center">
             <img src="/images/logo_long_white.png" alt="Logo" class="h-16 object-contain" />
         </div>
 
@@ -132,41 +147,38 @@
             </div>
 
         <!-- Position -->
-        <div class="text-center flex mt-2 justify-center text-gray-400 mt-1 px-4 font-bold">
-            <p class="me-1 font-siemreap text-base leading-snug">មុខតំណែង </p>
-            <p class="ms-1 text-sm font-dm-serif"> Position</p>
+        <div class="text-center flex mt-2 justify-center text-gray-400 mt-4 font-bold">
+            <p class="me-1 font-siemreap text-base leading-snug">កំពុងបំពេញការងារជា</p>
         </div>
 
-        <p class="text-center text-2xl​ font-bold font-siemreap text-white mt-1 px-4">
+        <p class="text-center text-2xl​ font-bold font-siemreap text-white mt-1">
           {{ position || 'មុខតំណែង' }}
         </p>
           <!-- Department -->
-        <div class="text-center flex mt-2 justify-center text-gray-400  mt-1 px-4 font-bold">
-            <p class="me-1 font-siemreap text-base leading-snug">នាយកដ្ឋាន </p>
-            <p class="ms-1 text-sm font-dm-serif"> Department</p>
-        </div>
 
-        <p class="text-center text-2xl​ font-bold font-siemreap text-white  mt-1 px-4">
+        <p class="text-center text-2xl​ font-bold font-siemreap text-white  mt-1">
           {{ department || 'នាយកដ្ឋាន' }}
         </p>
 
 
         <!-- Effective Date -->
-        <div class="text-center flex mt-auto justify-center text-gray-400 px-4 font-bold">
-            <p class="me-1 font-siemreap text-base leading-snug">កាតធ្វើថ្ងៃទី</p>
-            <p class="me-1 font-siemreap text-base leading-snug">Card Issue Date </p>
+        <div class="text-center text-sm flex mt-auto justify-center text-gray-400 px-4 font-bold">
+            <p class="me-1 font-siemreap leading-snug">កាតធ្វើថ្ងៃទី</p>
+            <p class="me-1 font-siemreap leading-snug">Card Issue Date </p>
         </div>
-        <p class="text-center text-xl font-dm-serif text-white">{{ today }}</p>
+        <p class="text-center text-sm font-dm-serif text-white">{{ today }}</p>
 
 
 
         <!-- Department bar -->
-        <div
-          :class="departmentBgColor(department)"
-          class="mt-auto py-4 text-center text-white font-moul text-l"
-        >
-          {{ department || '---' }}
-        </div>
+       <div class="px-4 mt-4">
+  <div
+    :class="departmentBgColor(department)"
+    class="mt-auto mb-4 py-2 text-center text-white font-moul text-base rounded-lg"
+  >
+    {{ department || '---' }}
+  </div>
+</div>
       </div>
     </div>
   </div>
@@ -243,18 +255,18 @@ function formatDate(dateStr, locale = 'km-KH') {
 function departmentBgColor(dep) {
   switch (dep) {
     case 'អគ្គនាយកដ្ឋាន ទស្សន៍ទាយ និងបង្ការគ្រោះ':
-      return 'bg-red-600'
+      return 'bg-gradient-to-r from-red-500 to-orange-300 text-white text-shadow'
     case 'អគ្គនាយកដ្ឋាន វត្ថុទិព':
-      return 'bg-green-600'
+      return 'bg-gradient-to-r from-green-400 to-indigo-500 text-white text-shadow'
     case 'នាយកដ្ឋាន ទំនាក់ទំនង':
-      return 'bg-blue-700'
+      return 'bg-gradient-to-r from-sky-500 to-blue-700 text-white text-shadow'
     case 'នាយកដ្ឋាន ប្រហាវេទមន្ត':
-      return 'bg-teal-700 text-gray-900'
+      return 'bg-gradient-to-r from-violet-500 to-indigo-600 text-gray-900' // no shadow for dark text
     default:
-      return 'bg-gray-700'
+      return 'bg-gradient-to-r from-gray-400 to-gray-600 text-white text-shadow'
   }
-
 }
+
 
 function hasKhmer(text) {
   return /[\u1780-\u17FF]/.test(text);
@@ -277,6 +289,9 @@ function hasLatin(text) {
 }
 .font-dm-serif {
   font-family: 'DM Serif Text', serif;
+}
+.text-shadow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 </style>
 
