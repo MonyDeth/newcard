@@ -4,7 +4,7 @@
   
 
     <!-- Edit Form (same as before) -->
-    <div class="order-1 md:order-none w-full md:w-1/2 bg-white rounded-lg shadow p-6">
+    <div class="order-1 md:order-none w-full md:w-1/2">
 <div class="flex items-center gap-4 mb-6">
   <img
     src="/images/logo.png"
@@ -17,7 +17,7 @@
   </div>
 </div>
   
-  <form @submit.prevent="submitForm" class="space-y-6 p-4 border border-gray-200 rounded-2xl">
+  <form @submit.prevent="submitForm" class="space-y-6 p-4 border border-gray-200 rounded-2xl shadow-md">
     <div>
   <label for="name" class="block font-medium mb-1">ឈ្មោះ</label>
   <input
@@ -104,7 +104,7 @@
 </div>
 
 
-<div class="order-2 md:order-none w-full md:w-1/2 flex justify-center items-center mb-20">
+<div class="order-2 md:order-none w-full md:w-1/2 flex justify-center items-center my-24">
             <div
             id="card-to-download"
             class="relative aspect-[2/3] w-full max-w-sm md:w-128 bg-white rounded-lg shadow-lg flex flex-col overflow-hidden bg-cover"
