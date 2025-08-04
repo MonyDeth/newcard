@@ -7,7 +7,7 @@
       <div class="flex items-center gap-4 mb-6">
         <img src="/images/logo.png" alt="Logo" class="w-16 sm:w-20 rounded-full object-cover" />
         <div class="text-[#093E65]">
-          <h2 class="text-base sm:text-2xl">ព័ត៌មានកាតមន្ត្រី</h2>
+          <h2 class="text-base sm:text-2xl">បំពេញព័ត៌មានកាតមន្ត្រី</h2>
           <h2 class="text-base sm:text-2xl font-dm-serif">Officer Card Information</h2>
         </div>
       </div>
@@ -22,7 +22,7 @@
             id="name"
             v-model="name"
             type="text"
-            class="w-full border border-gray-200 bg-gray-100 rounded-md px-4 py-1 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
+            class="w-full border border-gray-200 bg-white rounded-md px-4 py-1 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
             placeholder="បញ្ចូលឈ្មោះពេញ"
             required
           />
@@ -38,10 +38,13 @@
             id="position"
             v-model="position"
             type="text"
-            class="w-full border border-gray-200 bg-gray-100 rounded-md px-4 py-1 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
+            class="w-full border border-gray-200 bg-white rounded-md px-4 py-1 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
             placeholder="បញ្ចូលមុខដំណែង"
             required
           />
+                  <p
+          class="text-sm text-gray-500 mt-1"
+        >មន្ត្រី...</p>
         </div>
 
         <div>
@@ -49,7 +52,7 @@
           <select
             id="department"
             v-model="department"
-            class="w-full border border-gray-200 bg-gray-100 rounded-md px-4 py-1 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
+            class="w-full border border-gray-200 bg-white rounded-md px-4 py-1 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent"
             required
           >
             <option disabled value>ជ្រើសរើសអគ្គនាយកដ្ឋាន នាយកដ្ឋាន</option>

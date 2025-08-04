@@ -25,9 +25,12 @@
 <script setup>
 import { ref, nextTick, onMounted } from 'vue'
 import { gsap } from 'gsap'
-
+definePageMeta({
+  title: 'Your Page Title', // 🔁 Change this to your desired title
+})
 const loader = ref(null)
 const loaderContent = ref(null)
+
 
 onMounted(async () => {
   await nextTick()

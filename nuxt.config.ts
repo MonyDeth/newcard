@@ -11,4 +11,9 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+  app: {
+    head: {
+      title: 'MMS Card', // fallback
+    },
+  },
 });
