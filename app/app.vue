@@ -3,10 +3,9 @@
     <!-- Loading screen -->
     <div
       ref="loader"
-      class="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
-      style="background-color: #093E65"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-[#093E65]"
     >
-      <div class="text-center text-white">
+      <div ref="loaderContent" class="text-center text-white">
         <img
           src="/images/logo.png"
           alt="Logo"
@@ -17,7 +16,7 @@
     </div>
 
     <!-- Actual page content -->
-    <div ref="appContent">
+    <div>
       <NuxtPage />
     </div>
   </div>
@@ -28,21 +27,32 @@ import { ref, nextTick, onMounted } from 'vue'
 import { gsap } from 'gsap'
 
 const loader = ref(null)
-const appContent = ref(null)
+const loaderContent = ref(null)
 
 onMounted(async () => {
   await nextTick()
 
   requestAnimationFrame(() => {
     setTimeout(() => {
-      // Animate loader down with rounded top corners
-      gsap.to(loader.value, {
-        y: '100%',
-        borderTopLeftRadius: '2000px',
-        borderTopRightRadius: '2000px',
-        duration: 0.8,
-        ease: 'power3.in',
+      const tl = gsap.timeline({
+        onComplete: () => {
+          // Fully hide the loader to prevent scroll or interaction issues
+          loader.value.style.display = 'none'
+        },
       })
+
+      tl.to(loaderContent.value, {
+        scale: 1.4,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.inOut',
+      })
+
+      tl.to(loader.value, {
+        opacity: 0,
+        duration: 0.2,
+        ease: 'power1.inOut',
+      }, '-=0.3') // overlap fade with scale
     }, 1500)
   })
 })
