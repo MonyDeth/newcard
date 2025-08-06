@@ -1,75 +1,85 @@
-# Nuxt Minimal Starter
+# 🪪 Officer Card Maker
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A modern Vue 3 + Nuxt 3 web application for generating professional officer ID cards — with support for Khmer language, image uploads, department-based color gradients, and more.
 
-## Setup
+![Nuxt](https://img.shields.io/badge/Nuxt-3.x-green?logo=nuxtdotjs)
+![Vue](https://img.shields.io/badge/Vue-3.x-brightgreen?logo=vue.js)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.x-38bdf8?logo=tailwindcss)
+![GSAP](https://img.shields.io/badge/GSAP-3.x-88CE02?logo=greensock)
 
-Make sure to install dependencies:
+---
+
+## 📸 Preview
+
+![Screenshot](./public/images/screenshot.png)
+
+---
+
+## 🧰 Tech Stack
+
+- **[Nuxt 3](https://nuxt.com/)** – Vue 3 meta-framework
+- **[Vue 3](https://vuejs.org/)** – Reactive frontend framework
+- **[Tailwind CSS](https://tailwindcss.com/)** – Utility-first CSS
+- **[GSAP](https://gsap.com/)** – Advanced animation library
+
+---
+
+## ⚙️ Setup
+
+Clone the repository and install dependencies:
 
 ```bash
 # npm
 npm install
 
-# pnpm
-pnpm install
-
 # yarn
 yarn install
 
+# pnpm
+pnpm install
+
 # bun
 bun install
-```
 
-## Development Server
+##🔧 Development
 
-Start the development server on `http://localhost:3000`:
+Run the local dev server:
 
-```bash
 # npm
 npm run dev
-
-# pnpm
-pnpm dev
 
 # yarn
 yarn dev
 
+# pnpm
+pnpm dev
+
 # bun
 bun run dev
-```
 
-## Production
+Then visit: http://localhost:3000
 
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
+## Install Required Libraries
+# TailwindCSS
 
 ```bash
-# npm
-npm run preview
+npm install -D @nuxtjs/tailwindcss
 
-# pnpm
-pnpm preview
+In nuxt.config.ts:
+export default defineNuxtConfig({
+  modules: ['@nuxtjs/tailwindcss']
+})
 
-# yarn
-yarn preview
+# GSAP (for animation)
+```bash
+npm install gsap
 
-# bun
-bun run preview
-```
+Use it in any component:
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+import gsap from 'gsap'
+
+## License
+MIT — feel free to modify, contribute, or fork.
+
+## Author
+Akari Kenn
