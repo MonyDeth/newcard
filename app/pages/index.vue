@@ -59,7 +59,8 @@
             <option>អគ្គនាយកដ្ឋាន ទស្សន៍ទាយ និងបង្ការគ្រោះ</option>
             <option>អគ្គនាយកដ្ឋាន វត្ថុទិព</option>
             <option>នាយកដ្ឋាន ទំនាក់ទំនង</option>
-            <option>នាយកដ្ឋាន ប្រហាវេទមន្ត</option>
+            <option>នាយកដ្ឋាន ប្រហារវេទមន្ត</option>
+            <option>នាយកដ្ឋាន អាកាសនិងមេឃា</option>
           </select>
         </div>
 
@@ -240,6 +241,8 @@ function departmentBgColor(dep) {
       return "bg-gradient-to-r from-sky-500 to-blue-700 text-white text-shadow";
     case "នាយកដ្ឋាន ប្រហាវេទមន្ត":
       return "bg-gradient-to-r from-violet-500 to-indigo-600 text-gray-900"; // no shadow for dark text
+      case "នាយកដ្ឋាន អាកាសនិងមេឃា":
+      return "bg-gradient-to-r from-teal-500 to-orange-600 text-gray-900"; // no shadow for dark text
     default:
       return "bg-gradient-to-r from-gray-400 to-gray-600 text-white text-shadow";
   }
